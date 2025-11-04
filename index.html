@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pediatric PN Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Pediatric PN Calculator</h1>
+        
+        <!-- ส่วนข้อมูลผู้ป่วย -->
+        <div class="patient-info-section">
+            <h2>ข้อมูลผู้ป่วย</h2>
+            <div class="patient-form">
+                <div class="form-group">
+                    <label for="hn">HN:</label>
+                    <input type="text" id="hn" placeholder="กรอก HN">
+                </div>
+                <div class="form-group">
+                    <label for="patientName">ชื่อ-นามสกุล:</label>
+                    <input type="text" id="patientName" placeholder="กรอกชื่อผู้ป่วย">
+                </div>
+                <div class="form-group">
+                    <label for="ward">Ward:</label>
+                    <input type="text" id="ward" placeholder="กรอก Ward">
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <h2>ข้อมูลทางคลินิก</h2>
+            <div class="input-group">
+                <label for="weight">น้ำหนัก (kg):</label>
+                <input type="number" id="weight" step="0.1" min="0" placeholder="กรอกน้ำหนัก">
+            </div>
+            <div class="input-group">
+                <label for="oralIntake">ปริมาณอาหารทางปาก (kcal/day):</label>
+                <input type="number" id="oralIntake" step="0.1" min="0" value="0" placeholder="0">
+            </div>
+        </div>
+
+        <!-- Fluid Calculator -->
+        <div class="calculator-section">
+            <h2>💧 Fluid Requirements</h2>
+            <div class="result-box">
+                <div class="result-item">
+                    <span class="label">Maintenance Fluid:</span>
+                    <span id="maintenanceFluid" class="value">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PN Solution Selector -->
+        <div class="calculator-section">
+            <h2>💉 เลือกสารน้ำ PN</h2>
+            <div class="solution-grid">
+                <!-- Dextrose -->
+                <div class="solution-card">
+                    <h3>🍯 Dextrose</h3>
+                    <select id="dextroseType" class="solution-select">
+                        <option value="">-- เลือก --</option>
+                        <option value="D5W">D5W (5%)</option>
+                        <option value="D10W">D10W (10%)</option>
+                        <option value="D12.5W">D12.5W (12.5%)</option>
+                        <option value="D20W">D20W (20%)</option>
+                        <option value="D50W">D50W (50%)</option>
+                    </select>
+                    <input type="number" id="dextroseVolume" class="volume-input" placeholder="ปริมาณ (ml)" min="0" step="0.1">
+                    <div class="calorie-display">
+                        <span>🔥 Calories: </span>
+                        <span id="dextroseCalories">0</span> kcal
+                    </div>
+                </div>
+
+                <!-- Amino Acid -->
+                <div class="solution-card">
+                    <h3>🧬 Amino Acid</h3>
+                    <select id="aminoType" class="solution-select">
+                        <option value="">-- เลือก --</option>
+                        <option value="Vamin">Vamin (10%)</option>
+                        <option value="Primene">Primene (10%)</option>
+                        <option value="Aminoven">Aminoven (10%)</option>
+                        <option value="Aminoplasmal">Aminoplasmal (10%)</option>
+                    </select>
+                    <input type="number" id="aminoVolume" class="volume-input" placeholder="ปริมาณ (ml)" min="0" step="0.1">
+                    <div class="calorie-display">
+                        <span>🔥 Calories: </span>
+                        <span id="aminoCalories">0</span> kcal
+                    </div>
+                </div>
+
+                <!-- Lipid -->
+                <div class="solution-card">
+                    <h3>🥛 Lipid</h3>
+                    <select id="lipidType" class="solution-select">
+                        <option value="">-- เลือก --</option>
+                        <option value="Intralipid10">Intralipid (10%)</option>
+                        <option value="Intralipid20">Intralipid (20%)</option>
+                        <option value="SMOFlipid">SMOFlipid (20%)</option>
+                        <option value="ClinOleic">ClinOleic (20%)</option>
+                    </select>
+                    <input type="number" id="lipidVolume" class="volume-input" placeholder="ปริมาณ (ml)" min="0" step="0.1">
+                    <div class="calorie-display">
+                        <span>🔥 Calories: </span>
+                        <span id="lipidCalories">0</span> kcal
+                    </div>
+                </div>
+
+                <!-- Sodium -->
+                <div class="solution-card">
+                    <h3>🧂 Sodium</h3>
+                    <select id="sodiumType" class="solution-select">
+                        <option value="">-- เลือก --</option>
+                        <option value="NaCl">NaCl 0.9% (3 mEq/ml)</option>
+                        <option value="NSS">NSS (0.154 mEq/ml)</option>
+                    </select>
+                    <input type="number" id="sodiumVolume" class="volume-input" placeholder="ปริมาณ (ml)" min="0" step="0.1">
+                </div>
+
+                <!-- Potassium -->
+                <div class="solution-card">
+                    <h3>⚡ Potassium</h3>
+                    <select id="potassiumType" class="solution-select">
+                        <option value="">-- เลือก --</option>
+                        <option value="KCl">KCl 7.45% (1 mEq/ml)</option>
+                        <option value="KCl2">KCl 15% (2 mEq/ml)</option>
+                    </select>
+                    <input type="number" id="potassiumVolume" class="volume-input" placeholder="ปริมาณ (ml)" min="0" step="0.1">
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Summary -->
+        <div class="calculator-section summary-section">
+            <h2>📊 สรุปผลรวม</h2>
+            <div class="result-box">
+                <div class="result-item highlight">
+                    <span class="label">Total PN Calories:</span>
+                    <span id="totalPNCalories" class="value">0 kcal</span>
+                </div>
+                <div class="result-item highlight">
+                    <span class="label">Total Calories (PN + Oral):</span>
+                    <span id="totalCalories" class="value">0 kcal</span>
+                </div>
+                <div class="result-item">
+                    <span class="label">Total Volume:</span>
+                    <span id="totalVolume" class="value">0 ml</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="submit-section">
+            <button id="submitBtn" class="submit-btn">📄 สร้างรายงาน PDF</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
