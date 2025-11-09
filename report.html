@@ -7,70 +7,89 @@
     <style>
         @page {
             size: A4;
-            margin: 15mm;
+            margin: 10mm;
         }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Sarabun', 'Noto Sans Thai', Arial, sans-serif;
-            font-size: 11pt;
-            line-height: 1.4;
+            font-size: 10pt;
+            line-height: 1.3;
             color: #000;
             background: #fff;
+            padding: 0;
         }
+        
         .report-container {
-            width: 210mm;
-            min-height: 297mm;
+            max-width: 210mm;
             margin: 0 auto;
             background: white;
-            box-shadow: 0 8px 32px rgba(79, 172, 254, 0.15); /* For screen only */
+            padding: 10mm;
         }
+        
         .header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border-bottom: 3px solid #4facfe;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
+        
         .header h1 {
-            font-size: 20pt;
+            font-size: 18pt;
             color: #2d3748;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-weight: 700;
         }
+        
         .header p {
-            font-size: 10pt;
+            font-size: 9pt;
             color: #718096;
         }
+        
         .section {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
+        
         .section-title {
             background: #4facfe;
             color: white;
-            padding: 6px 10px;
-            font-size: 11pt;
+            padding: 5px 10px;
+            font-size: 10pt;
             font-weight: 600;
             border-radius: 4px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
+        
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px 20px;
-            margin-bottom: 10px;
+            gap: 6px 20px;
+            margin-bottom: 8px;
         }
+        
         .info-item {
             display: flex;
             align-items: baseline;
+            gap: 6px;
         }
+        
         .info-label {
             font-weight: 600;
             color: #2d3748;
-            min-width: 80px;
+            min-width: 90px;
+            flex-shrink: 0;
         }
+        
         .info-value {
             color: #4a5568;
             flex: 1;
-            margin-left: 6px;
         }
+        
         .order-date-special {
             background: #f0f9ff;
             border: 2px solid #4facfe;
@@ -81,11 +100,13 @@
             justify-content: space-between;
             align-items: center;
         }
+        
         .order-date-special .date-info {
             font-size: 12pt;
             font-weight: 600;
             color: #0369a1;
         }
+        
         .order-date-special .day-badge {
             background: #0369a1;
             color: white;
@@ -94,6 +115,7 @@
             font-size: 10pt;
             font-weight: 600;
         }
+        
         .route-badge {
             display: inline-block;
             background: #10b981;
@@ -103,15 +125,18 @@
             font-size: 10pt;
             font-weight: 600;
         }
+        
         .route-badge.peripheral {
             background: #f59e0b;
         }
+        
         .composition-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 10px;
             font-size: 10pt;
         }
+        
         .composition-table th {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -120,18 +145,22 @@
             font-weight: 600;
             color: #2d3748;
         }
+        
         .composition-table td {
             border: 1px solid #e2e8f0;
             padding: 5px 8px;
             color: #4a5568;
         }
+        
         .composition-table tr:nth-child(even) {
             background: #f8fafc;
         }
+        
         .highlight-row {
             background: #fef3c7 !important;
             font-weight: 600;
         }
+        
         .summary-box {
             background: #f0f9ff;
             border: 2px solid #4facfe;
@@ -139,29 +168,35 @@
             padding: 10px;
             margin-bottom: 10px;
         }
+        
         .summary-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
             text-align: center;
         }
+        
         .summary-item {
             padding: 8px;
         }
+        
         .summary-label {
             font-size: 9pt;
             color: #4a5568;
             margin-bottom: 4px;
         }
+        
         .summary-value {
             font-size: 16pt;
             font-weight: 700;
             color: #0369a1;
         }
+        
         .summary-unit {
             font-size: 9pt;
             color: #718096;
         }
+        
         .total-summary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -169,35 +204,42 @@
             padding: 12px;
             margin-top: 10px;
         }
+        
         .total-summary h3 {
             text-align: center;
             margin-bottom: 10px;
             font-size: 12pt;
         }
+        
         .total-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
             text-align: center;
         }
+        
         .total-item {
             background: rgba(255,255,255,0.2);
             border-radius: 4px;
             padding: 8px;
         }
+        
         .total-label {
             font-size: 9pt;
             opacity: 0.9;
             margin-bottom: 4px;
         }
+        
         .total-value {
             font-size: 18pt;
             font-weight: 700;
         }
+        
         .total-unit {
             font-size: 8pt;
             opacity: 0.8;
         }
+        
         .footer {
             margin-top: 15px;
             padding-top: 10px;
@@ -206,6 +248,7 @@
             font-size: 9pt;
             color: #718096;
         }
+        
         .print-btn {
             position: fixed;
             top: 20px;
@@ -221,7 +264,11 @@
             box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
             z-index: 1000;
         }
-        .print-btn:hover { background: #3b8ad6; }
+        
+        .print-btn:hover {
+            background: #3b8ad6;
+        }
+        
         .back-btn {
             position: fixed;
             top: 20px;
@@ -237,22 +284,43 @@
             box-shadow: 0 4px 12px rgba(113, 128, 150, 0.4);
             z-index: 1000;
         }
-        .back-btn:hover { background: #4a5568; }
+        
+        .back-btn:hover {
+            background: #4a5568;
+        }
+        
         @media print {
-            body { background: #fff; }
-            .print-btn, .back-btn { display: none; }
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .print-btn, .back-btn {
+                display: none;
+            }
+            
             .report-container {
                 box-shadow: none;
-                margin: 0;
-                min-height: 0;
-                width: 100%;
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            .header {
+                margin-bottom: 10px;
+                padding-bottom: 6px;
+            }
+            
+            .section {
+                margin-bottom: 8px;
             }
         }
+        
         .two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
+        
         .osmol-display {
             background: #f0fdf4;
             border: 2px solid #86efac;
@@ -260,27 +328,38 @@
             padding: 10px;
             text-align: center;
         }
+        
         .osmol-display.high {
             background: #fee2e2;
             border-color: #fca5a5;
         }
+        
         .osmol-label {
             font-size: 9pt;
             color: #166534;
             margin-bottom: 4px;
         }
-        .osmol-display.high .osmol-label { color: #991b1b; }
+        
+        .osmol-display.high .osmol-label {
+            color: #991b1b;
+        }
+        
         .osmol-value {
             font-size: 18pt;
             font-weight: 700;
             color: #166534;
         }
-        .osmol-display.high .osmol-value { color: #991b1b; }
+        
+        .osmol-display.high .osmol-value {
+            color: #991b1b;
+        }
+        
         .osmol-note {
             font-size: 8pt;
             color: #166534;
             margin-top: 4px;
         }
+        
         .osmol-display.high .osmol-note {
             color: #991b1b;
             font-weight: 600;
@@ -416,33 +495,6 @@
     </div>
 
     <script>
-        // THAI MONTHS
-        const thaiMonths = [
-            'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
-            'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
-        ];
-        const thaiDays = [
-            "อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"
-        ];
-
-        // Format Thai date dd/MM/yyyy เป็น 1 เดือน ปี พ.ศ.
-        function formatThaiDate(dateInput) {
-            if(!dateInput) return "-";
-            const date = new Date(dateInput);
-            if(isNaN(date.getTime())) return "-";
-            const d = date.getDate();
-            const m = thaiMonths[date.getMonth()];
-            const y = date.getFullYear() + 543;
-            return `${d} ${m} ${y}`;
-        }
-        // Format Thai day name (input is ISO)
-        function formatThaiDay(dateInput) {
-            if(!dateInput) return "-";
-            const date = new Date(dateInput);
-            if(isNaN(date.getTime())) return "-";
-            return thaiDays[date.getDay()];
-        }
-
         // Load data from localStorage
         const data = JSON.parse(localStorage.getItem('tpnReportData') || '{}');
 
@@ -450,17 +502,21 @@
         document.getElementById('display-hn').textContent = data.hn || '-';
         document.getElementById('display-name').textContent = data.name || '-';
         document.getElementById('display-ward').textContent = data.ward || '-';
+        document.getElementById('display-bw').textContent = data.bw ? `${data.bw} kg` : '-';
 
-        // Show body weight with space before unit
-        let bodyWeight = '-';
-        if (data.bw && data.bw !== '-') {
-            bodyWeight = data.bw + '\u00A0kg';
+        // Display order date with day name (convert to Thai Buddhist year)
+        let displayDate = data.orderDate || '-';
+        if (data.orderDate && data.orderDate !== '-') {
+            const date = new Date(data.orderDate);
+            const thaiMonths = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 
+                              'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+            const day = date.getDate();
+            const month = thaiMonths[date.getMonth()];
+            const year = date.getFullYear() + 543; // Convert to Buddhist year
+            displayDate = `${day} ${month} ${year}`;
         }
-        document.getElementById('display-bw').textContent = bodyWeight;
-
-        // Display order date with day name (Thai format)
-        document.getElementById('display-order-date').textContent = formatThaiDate(data.orderDate);
-        document.getElementById('display-day-name').textContent = formatThaiDay(data.orderDate);
+        document.getElementById('display-order-date').textContent = displayDate;
+        document.getElementById('display-day-name').textContent = data.orderDayName || '-';
 
         // Display route
         const routeBadge = document.getElementById('display-route');
@@ -469,117 +525,99 @@
             routeBadge.classList.add('peripheral');
         }
 
-        // Show bag volume and rate with space before unit
-        function addUnitSpace(val, unit) {
-            return (val && val !== '-') ?
-                (val.toString().replace(/\s*([a-zA-Z%/]+)/, '') + '\u00A0' + unit)
-                : '-';
-        }
-        document.getElementById('display-bag').textContent = addUnitSpace(data.bag, 'ml');
-        document.getElementById('display-rate').textContent = addUnitSpace(data.rate, 'ml/hr');
+        // Display bag and rate
+        document.getElementById('display-bag').textContent = data.bag ? `${data.bag} ml` : '-';
+        document.getElementById('display-rate').textContent = data.rate ? `${data.rate} ml/hr` : '-';
 
         // Build composition table
         const tbody = document.getElementById('composition-body');
         const compositions = [];
 
-        // Helper: Show volumn-and-note, auto remove 'ml' in value
-        function fixVolume(vol) {
-            if(typeof vol !== "string") return vol;
-            // remove ml, ML, ml ml, white space
-            let v = vol.replace(/ml/gi, '').replace(/ /g, '');
-            // remove anything not number or dot or minus
-            v = v.replace(/[^0-9.\-]/g, '');
-            return v;
-        }
-
-        // List for checking if the component is a special electrolyte
-        const electrolytesList = [
-            { key: 'pVol', name: 'Glycophos® (P)' },
-            { key: 'naclVol', name: '3% NaCl' },
-            { key: 'naAcVol', name: 'Na Acetate' },
-            { key: 'kclVol', name: '15% KCl' },
-            { key: 'kAcVol', name: 'K Acetate' },
-            { key: 'caVol', name: 'Ca Gluconate' },
-            { key: 'mgVol', name: 'MgSO₄' }
-        ];
-
         // Macronutrients
-        if (+data.proteinVol > 0) {
+        if (parseFloat(data.proteinVol) > 0) {
             compositions.push({
                 name: '10% Protein',
-                volume: fixVolume(data.proteinVol),
+                volume: data.proteinVol,
                 note: ''
             });
         }
 
-        if (+data.dextroseVol > 0) {
+        if (parseFloat(data.dextroseVol) > 0) {
             compositions.push({
                 name: '50% Dextrose',
-                volume: fixVolume(data.dextroseVol),
+                volume: data.dextroseVol,
                 note: ''
             });
         }
 
-        if (+data.fatVol > 0) {
+        if (parseFloat(data.fatVol) > 0) {
             compositions.push({
                 name: '20% Fat',
-                volume: fixVolume(data.fatVol),
+                volume: data.fatVol,
                 note: ''
             });
         }
 
-        // Electrolytes +fix ml/ml issue
-        if (+data.pVol > 0) {
+        // Electrolytes
+        if (parseFloat(data.pVol) > 0) {
             compositions.push({
                 name: 'Glycophos® (P)',
-                volume: fixVolume(data.pVol),
-                note: 'Contains Na ' + (data.naFromGly||'')
+                volume: parseFloat(data.pVol.replace(/[^0-9.]/g, '')).toFixed(1),
+                note: 'Contains Na ' + data.naFromGly
             });
         }
-        if (data.naSource === 'nacl' && +data.naclVol > 0) {
+
+        // Na source
+        if (data.naSource === 'nacl' && parseFloat(data.naclVol) > 0) {
             compositions.push({
                 name: '3% NaCl',
-                volume: fixVolume(data.naclVol),
+                volume: parseFloat(data.naclVol.replace(/[^0-9.]/g, '')).toFixed(1),
                 note: ''
             });
-        } else if (data.naSource === 'na-acetate' && +data.naAcVol > 0) {
+        } else if (data.naSource === 'na-acetate' && parseFloat(data.naAcVol) > 0) {
             compositions.push({
                 name: 'Na Acetate',
-                volume: fixVolume(data.naAcVol),
-                note: ''
-            });
-        }
-        if (data.kSource === 'kcl' && +data.kclVol > 0) {
-            compositions.push({
-                name: '15% KCl',
-                volume: fixVolume(data.kclVol),
-                note: ''
-            });
-        } else if (data.kSource === 'k-acetate' && +data.kAcVol > 0) {
-            compositions.push({
-                name: 'K Acetate',
-                volume: fixVolume(data.kAcVol),
-                note: ''
-            });
-        }
-        if (+data.caVol > 0) {
-            compositions.push({
-                name: 'Ca Gluconate',
-                volume: fixVolume(data.caVol),
-                note: ''
-            });
-        }
-        if (+data.mgVol > 0) {
-            compositions.push({
-                name: 'MgSO₄',
-                volume: fixVolume(data.mgVol),
+                volume: parseFloat(data.naAcVol.replace(/[^0-9.]/g, '')).toFixed(1),
                 note: ''
             });
         }
 
-        // Micronutrients (no ml ml for Peditrace/Cernevit, but just in case use fixVolume)
-        const peditVol = data.peditrace ? fixVolume(data.peditrace) : 0;
-        if (parseFloat(peditVol) > 0) {
+        // K source
+        if (data.kSource === 'kcl' && parseFloat(data.kclVol) > 0) {
+            compositions.push({
+                name: '15% KCl',
+                volume: parseFloat(data.kclVol.replace(/[^0-9.]/g, '')).toFixed(1),
+                note: ''
+            });
+        } else if (data.kSource === 'k-acetate' && parseFloat(data.kAcVol) > 0) {
+            compositions.push({
+                name: 'K Acetate',
+                volume: parseFloat(data.kAcVol.replace(/[^0-9.]/g, '')).toFixed(1),
+                note: ''
+            });
+        }
+
+        // Ca
+        if (parseFloat(data.caVol) > 0) {
+            compositions.push({
+                name: 'Ca Gluconate',
+                volume: parseFloat(data.caVol.replace(/[^0-9.]/g, '')).toFixed(1),
+                note: ''
+            });
+        }
+
+        // Mg
+        if (parseFloat(data.mgVol) > 0) {
+            compositions.push({
+                name: 'MgSO₄',
+                volume: parseFloat(data.mgVol.replace(/[^0-9.]/g, '')).toFixed(1),
+                note: ''
+            });
+        }
+
+        // Micronutrients
+        const peditVol = data.peditrace ? parseFloat(data.peditrace.replace(/[^0-9.]/g, '')) : 0;
+        if (peditVol > 0) {
             let peditNote = '';
             if (data.peditFreq === 'daily') peditNote = 'Per day';
             else if (data.peditFreq === 'mwf') peditNote = 'Mon, Wed, Fri';
@@ -589,12 +627,13 @@
             }
             compositions.push({
                 name: 'Peditrace®',
-                volume: fixVolume(peditVol),
+                volume: peditVol.toFixed(1),
                 note: peditNote
             });
         }
-        const cernVol = data.cernevit ? fixVolume(data.cernevit) : 0;
-        if (parseFloat(cernVol) > 0) {
+
+        const cernVol = data.cernevit ? parseFloat(data.cernevit.replace(/[^0-9.]/g, '')) : 0;
+        if (cernVol > 0) {
             let cernNote = '';
             if (data.cernFreq === 'daily') cernNote = 'Per day';
             else if (data.cernFreq === 'mwf') cernNote = 'Mon, Wed, Fri';
@@ -604,51 +643,54 @@
             }
             compositions.push({
                 name: 'Cernevit®',
-                volume: fixVolume(cernVol),
+                volume: cernVol.toFixed(1),
                 note: cernNote
             });
         }
+
         // Vitamin K
         if (data.vitKChoice === 'daily') {
-            const vitKVol = fixVolume(data.vitKDaily||0);
-            if (parseFloat(vitKVol) > 0) {
+            const vitKVol = data.vitKDaily ? parseFloat(data.vitKDaily.replace(/[^0-9.]/g, '')) : 0;
+            if (vitKVol > 0) {
                 compositions.push({
                     name: 'Vitamin K',
-                    volume: vitKVol,
+                    volume: vitKVol.toFixed(3),
                     note: 'Per day'
                 });
             }
         } else if (data.vitKChoice === 'weekly') {
-            const vitKVol = fixVolume(data.vitKWeekly||0);
-            if (parseFloat(vitKVol) > 0) {
+            const vitKVol = data.vitKWeekly ? parseFloat(data.vitKWeekly.replace(/[^0-9.]/g, '')) : 0;
+            if (vitKVol > 0) {
                 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
                 const dayName = days[parseInt(data.vitKDay || 1)];
                 compositions.push({
                     name: 'Vitamin K',
-                    volume: vitKVol,
+                    volume: vitKVol.toFixed(3),
                     note: 'Weekly (' + dayName + ')'
                 });
             }
         }
+
         // Heparin
-        if (data.hasPicc && +fixVolume(data.heparinVol) > 0) {
+        if (data.hasPicc && parseFloat(data.heparinVol) > 0) {
             compositions.push({
                 name: 'Heparin',
-                volume: fixVolume(data.heparinVol),
+                volume: data.heparinVol,
                 note: 'PICC line'
             });
         }
+
         // Sterile Water
-        if (+fixVolume(data.sterileWater) > 0) {
+        if (parseFloat(data.sterileWater) > 0) {
             compositions.push({
                 name: 'Sterile Water',
-                volume: fixVolume(data.sterileWater),
+                volume: data.sterileWater,
                 note: '',
                 highlight: true
             });
         }
 
-        // Populate table (append " ml" at render, only once)
+        // Populate table
         compositions.forEach(comp => {
             const row = document.createElement('tr');
             if (comp.highlight) row.classList.add('highlight-row');
@@ -660,15 +702,17 @@
             tbody.appendChild(row);
         });
 
-        // Show PN calories (number only)
-        document.getElementById('display-pn-cal').textContent = (data.pnCalKg||'0').replace(/[^\d.]/g, '');
+        // Display PN calories
+        document.getElementById('display-pn-cal').textContent = data.pnCalKg || '0';
 
-        // mOsmol with warning if >900
-        const osmolValue = data.totalOsmol ? data.totalOsmol.replace('~','').replace(/[^\d]/g,'') : '0';
-        const osmolNum = parseInt(osmolValue)||0;
-        document.getElementById('display-osmol').textContent = '~'+osmolValue;
+        // Display mOsmol with warning if > 900
+        const osmolValue = data.totalOsmol ? data.totalOsmol.replace('~', '') : '0';
+        const osmolNum = parseInt(osmolValue);
+        document.getElementById('display-osmol').textContent = '~' + osmolValue;
+        
         const osmolContainer = document.getElementById('osmol-container');
         const osmolNote = document.getElementById('osmol-note');
+        
         if (osmolNum > 900) {
             osmolContainer.classList.add('high');
             osmolNote.textContent = '⚠️ > 900 (ไม่เหมาะสำหรับ Peripheral)';
@@ -676,22 +720,21 @@
             osmolNote.textContent = '✓ < 900 (เหมาะสำหรับ Peripheral)';
         }
 
-        // Show total calories summary
-        document.getElementById('display-pn-total').textContent = (data.pnCalKg||'0').replace(/[^\d.]/g,'');
-        document.getElementById('display-milk-total').textContent = (data.milkCalKg||'0').replace(/[^\d.]/g,'');
-        document.getElementById('display-grand-total').textContent = (data.totalCalKg||'0').replace(/[^\d.]/g,'');
+        // Display total calories summary
+        document.getElementById('display-pn-total').textContent = data.pnCalKg || '0';
+        document.getElementById('display-milk-total').textContent = data.milkCalKg || '0';
+        document.getElementById('display-grand-total').textContent = data.totalCalKg || '0';
 
-        // Footer: Display generation date (Thai style)
-        function getThaiDateTimeString(){
-            const now = new Date();
-            const d = now.getDate();
-            const m = thaiMonths[now.getMonth()];
-            const y = now.getFullYear() + 543;
-            const h = now.getHours().toString().padStart(2,'0');
-            const min = now.getMinutes().toString().padStart(2,'0');
-            return `${d} ${m} ${y} เวลา ${h}:${min} น.`;
-        }
-        document.getElementById('generated-date').textContent = getThaiDateTimeString();
+        // Display generation date
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('th-TH', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        document.getElementById('generated-date').textContent = dateStr;
     </script>
 </body>
 </html>
