@@ -568,7 +568,7 @@
     // Set default date to today
     document.addEventListener('DOMContentLoaded', function() {
       const today = new Date();
-      const dateStr = today.toISOString().split('T')[0];
+      const dateStr = today.toISOString().split('T')[0](undefined);
       document.getElementById('order-date').value = dateStr;
     });
 
@@ -883,7 +883,15 @@
     document.getElementById('picc-line-checkbox')?.addEventListener('change', calculateTPN);
     document.querySelectorAll('input[name="vitamin-k-choice"]').forEach(r=>r.addEventListener('change', calculateTPN));
 
-    // Submit button handler
+    // Helper to extract first numeric (integer/float) from a string (returns '0' if none)
+    function extractNumberString(text) {
+      if (text === undefined || text === null) return '0';
+      const s = String(text);
+      const m = s.match(/-?\d+(\.\d+)?/);
+      return m ? m[0](undefined) : '0';
+    }
+
+    // Submit button handler (modified to clean values before saving)
     document.getElementById('submitBtn')?.addEventListener('click', function() {
       const hn = document.getElementById('patient-hn')?.value.trim();
       const name = document.getElementById('patient-name')?.value.trim();
@@ -899,7 +907,9 @@
       // Get day name
       const dayName = getDayName(orderDate);
 
-      // Collect all data
+      // Collect all data and clean numeric-like display fields
+      function dsel(id) { return document.getElementById(id)?.textContent || document.getElementById(id)?.value || ''; }
+
       const reportData = {
         orderDate: orderDate,
         orderDayName: dayName,
@@ -920,61 +930,55 @@
         k: document.getElementById('k')?.value || '0',
         ca: document.getElementById('ca')?.value || '0',
         mg: document.getElementById('mg')?.value || '0',
-        proteinVol: document.getElementById('protein-volume')?.textContent || '0',
-        proteinCal: document.getElementById('protein-calories')?.textContent || '0',
-        dextroseVol: document.getElementById('dextrose-volume')?.textContent || '0',
-        dextroseCal: document.getElementById('dextrose-calories')?.textContent || '0',
-        fatVol: document.getElementById('fat-volume')?.textContent || '0',
-        fatCal: document.getElementById('fat-calories')?.textContent || '0',
-        gir: document.getElementById('gir-result')?.textContent || '0',
-        pVol: document.getElementById('p-volume')?.textContent || '0',
-        naFromGly: document.getElementById('na-from-glycophos')?.textContent || '0',
+
+        // IMPORTANT: clean numeric text fields to plain numeric strings (no "ml" etc.)
+        proteinVol: extractNumberString(dsel('protein-volume')),
+        proteinCal: extractNumberString(dsel('protein-calories')),
+        dextroseVol: extractNumberString(dsel('dextrose-volume')),
+        dextroseCal: extractNumberString(dsel('dextrose-calories')),
+        fatVol: extractNumberString(dsel('fat-volume')),
+        fatCal: extractNumberString(dsel('fat-calories')),
+
+        gir: dsel('gir-result'),
+
+        pVol: extractNumberString(dsel('p-volume')),
+        naFromGly: extractNumberString(dsel('na-from-glycophos')),
         naSource: document.querySelector('input[name="na-source"]:checked')?.value || '',
-        naclVol: document.getElementById('nacl-volume')?.textContent || '0',
-        naAcVol: document.getElementById('na-acetate-volume')?.textContent || '0',
+        naclVol: extractNumberString(dsel('nacl-volume')),
+        naAcVol: extractNumberString(dsel('na-acetate-volume')),
+
         kSource: document.querySelector('input[name="k-source"]:checked')?.value || '',
-        kclVol: document.getElementById('kcl-volume')?.textContent || '0',
-        kAcVol: document.getElementById('k-acetate-volume')?.textContent || '0',
-        caVol: document.getElementById('ca-volume')?.textContent || '0',
-        mgVol: document.getElementById('mg-volume')?.textContent || '0',
-        peditrace: document.getElementById('peditrace-volume')?.textContent || '0',
+        kclVol: extractNumberString(dsel('kcl-volume')),
+        kAcVol: extractNumberString(dsel('k-acetate-volume')),
+
+        caVol: extractNumberString(dsel('ca-volume')),
+        mgVol: extractNumberString(dsel('mg-volume')),
+
+        peditrace: extractNumberString(dsel('peditrace-volume')),
         peditFreq: document.querySelector('input[name="peditrace-freq"]:checked')?.value || 'daily',
         peditDay: document.getElementById('peditrace-day')?.value || '1',
-        cernevit: document.getElementById('cernevit-volume')?.textContent || '0',
+
+        cernevit: extractNumberString(dsel('cernevit-volume')),
         cernFreq: document.querySelector('input[name="cernevit-freq"]:checked')?.value || 'daily',
         cernDay: document.getElementById('cernevit-day')?.value || '1',
+
         vitKChoice: document.querySelector('input[name="vitamin-k-choice"]:checked')?.value || 'none',
         vitKDay: document.getElementById('vitamin-k-day')?.value || '1',
-        vitKDaily: document.getElementById('vitamin-k-daily')?.textContent || '0',
-        vitKWeekly: document.getElementById('vitamin-k-weekly')?.textContent || '0',
+        vitKDaily: extractNumberString(dsel('vitamin-k-daily')),
+        vitKWeekly: extractNumberString(dsel('vitamin-k-weekly')),
+
         hasPicc: document.getElementById('picc-line-checkbox')?.checked || false,
-        heparinVol: document.getElementById('heparin-volume')?.textContent || '0',
-        sterileWater: document.getElementById('sterile-water-volume')?.textContent || '0',
-        totalOsmol: document.getElementById('total-osmol')?.textContent || '0',
-        totalCalDay: document.getElementById('total-calories-day')?.textContent || '0',
-        totalCalKg: document.getElementById('total-calories-kg')?.textContent || '0',
-        pnCalKg: document.getElementById('breakdown-pn')?.textContent || '0',
-        milkCalKg: document.getElementById('breakdown-milk')?.textContent || '0',
-        tfFromMilk: document.getElementById('tf-from-milk')?.textContent || '0'
+        heparinVol: extractNumberString(dsel('heparin-volume')),
+
+        sterileWater: extractNumberString(dsel('sterile-water-volume')),
+        totalOsmol: extractNumberString(dsel('total-osmol')),
+
+        totalCalDay: extractNumberString(dsel('total-calories-day')),
+        totalCalKg: extractNumberString(dsel('total-calories-kg')),
+        pnCalKg: extractNumberString(dsel('breakdown-pn')),
+        milkCalKg: extractNumberString(dsel('breakdown-milk')),
+        tfFromMilk: dsel('tf-from-milk')
       };
 
       localStorage.setItem('tpnReportData', JSON.stringify(reportData));
-      window.location.href = 'report.html';
-    });
-
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange:(config)=>{
-          document.getElementById('app-title').textContent = config.app_title || defaultConfig.app_title;
-          document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
-        },
-        mapToCapabilities:()=>({recolorables:[], borderables:[], fontEditable: undefined, fontSizeable: undefined}),
-        mapToEditPanelValues:(config)=>new Map([["app_title", config.app_title || defaultConfig.app_title], ["subtitle", config.subtitle || defaultConfig.subtitle]])
-      });
-    }
-
-    calculateTPN();
-  </script>
- </body>
-</html>
+      window.location.href =
