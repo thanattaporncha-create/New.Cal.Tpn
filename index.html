@@ -19,6 +19,7 @@
         .input-field label { color:#4a5568; font-weight:500; margin-bottom:8px; font-size:.95em; }
         .input-with-unit { display:flex; align-items:center; position:relative; }
         .input-field input { padding:12px 16px; border:2px solid #e2e8f0; border-radius:8px; font-size:1em; transition:all .3s ease; background:white; flex:1; padding-right:60px; -webkit-appearance:none; -moz-appearance:textfield; }
+        .input-field input[type="date"] { padding:12px 16px; padding-right:16px; }
         .input-field input::-webkit-outer-spin-button,.input-field input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
         .input-field input:focus { outline:none; border-color:#4facfe; box-shadow:0 0 0 3px rgba(79,172,254,.1); }
         .unit { position:absolute; right:16px; color:#718096; font-size:.9em; font-weight:500; pointer-events:none; background:white; padding-left:8px; }
@@ -45,6 +46,16 @@
         .total-section h2 { margin:0 0 15px 0; font-size:1.6em; }
         .total-calories { font-size:2.5em; font-weight:700; margin:10px 0; }
         
+        /* Route selection */
+        .route-selection { margin-top:20px; }
+        .route-selection h3 { color:#2d3748; margin:0 0 15px 0; font-size:1.1em; font-weight:600; }
+        .route-options { display:flex; gap:15px; }
+        .route-option { flex:1; display:flex; align-items:center; justify-content:center; padding:15px; border-radius:8px; border:2px solid #e2e8f0; background:#f8fafc; cursor:pointer; transition:all .3s ease; }
+        .route-option:hover { background:#f0f9ff; border-color:#4facfe; }
+        .route-option input[type="radio"] { margin-right:10px; transform:scale(1.3); cursor:pointer; }
+        .route-option label { font-weight:500; color:#2d3748; cursor:pointer; font-size:1em; }
+        .route-option input[type="radio"]:checked + label { color:#4facfe; font-weight:600; }
+        
         /* New electrolyte styles */
         .electrolyte-item { background:white; border-radius:8px; padding:20px; margin-bottom:15px; border:2px solid #e2e8f0; }
         .electrolyte-header { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px; }
@@ -64,6 +75,16 @@
         .source-option-label { flex:1; font-weight:500; color:#2d3748; }
         .source-option-value { background:#dbeafe; color:#1e40af; padding:6px 12px; border-radius:4px; font-weight:600; font-size:0.9em; min-width:60px; text-align:center; }
         
+        /* Frequency selection styles */
+        .frequency-selection { margin-top:15px; padding-top:15px; border-top:1px solid #e2e8f0; }
+        .frequency-selection h4 { margin:0 0 12px 0; color:#2d3748; font-size:0.95em; font-weight:600; }
+        .frequency-option { display:flex; align-items:center; padding:10px; margin-bottom:8px; border-radius:6px; background:#f8fafc; transition:all .2s ease; cursor:pointer; }
+        .frequency-option:hover { background:#f0f9ff; }
+        .frequency-option input[type="radio"] { margin-right:12px; transform:scale(1.3); cursor:pointer; }
+        .frequency-option-label { flex:1; font-weight:500; color:#2d3748; }
+        .day-selector { margin-left:30px; margin-top:8px; display:none; }
+        .day-selector select { padding:8px 12px; border:2px solid #e2e8f0; border-radius:6px; font-size:0.95em; }
+        
         /* Submit button */
         .submit-section { text-align:center; margin-top:30px; }
         .submit-btn { background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white; border:none; padding:18px 50px; font-size:1.2em; border-radius:50px; cursor:pointer; box-shadow:0 4px 15px rgba(102,126,234,0.4); transition:all 0.3s; font-weight:600; }
@@ -72,6 +93,7 @@
         
         @media (max-width:768px){
           .input-group{grid-template-columns:1fr}
+          .route-options{flex-direction:column}
           .electrolyte-header{grid-template-columns:1fr}
           .tpn-table{font-size:.85em;border-radius:8px}
           .table-cell{padding:8px 4px;min-height:45px}
@@ -97,6 +119,22 @@
     <p id="subtitle">สำหรับเด็ก</p>
    </header>
    <div class="content">
+
+    <!-- Order Date Section -->
+    <section class="section">
+     <h2>วันที่ Order TPN</h2>
+     <div class="input-group">
+      <div class="input-field">
+       <label for="order-date">วันที่</label>
+       <div class="input-with-unit">
+        <input type="date" id="order-date" style="padding-right:16px;">
+       </div>
+      </div>
+      <div class="input-field">
+       <!-- ช่องว่างเพื่อให้ grid สมดุล -->
+      </div>
+     </div>
+    </section>
 
     <!-- Patient Information Section -->
     <section class="section">
@@ -124,6 +162,21 @@
       </div>
       <div class="input-field">
        <!-- ช่องว่างเพื่อให้ grid สมดุล -->
+      </div>
+     </div>
+
+     <!-- Route Selection -->
+     <div class="route-selection">
+      <h3>Route การให้ TPN</h3>
+      <div class="route-options">
+       <div class="route-option">
+        <input type="radio" name="tpn-route" value="central" id="route-central" checked>
+        <label for="route-central">Central</label>
+       </div>
+       <div class="route-option">
+        <input type="radio" name="tpn-route" value="peripheral" id="route-peripheral">
+        <label for="route-peripheral">Peripheral</label>
+       </div>
       </div>
      </div>
     </section>
@@ -171,19 +224,19 @@
        <div class="table-cell header-cell">mOsmol/L</div>
       </div>
       <div class="table-row">
-       <div class="table-cell component-cell">Protein</div>
+       <div class="table-cell component-cell">10% Protein</div>
        <div class="table-cell result-cell volume-yellow" id="protein-volume">0</div>
        <div class="table-cell result-cell" id="protein-calories">0</div>
        <div class="table-cell result-cell osmol-purple" id="protein-osmol">0</div>
       </div>
       <div class="table-row">
-       <div class="table-cell component-cell">Dextrose</div>
+       <div class="table-cell component-cell">50% Dextrose</div>
        <div class="table-cell result-cell volume-yellow" id="dextrose-volume">0</div>
        <div class="table-cell result-cell" id="dextrose-calories">0</div>
        <div class="table-cell result-cell osmol-purple" id="dextrose-osmol">0</div>
       </div>
       <div class="table-row">
-       <div class="table-cell component-cell">Fat</div>
+       <div class="table-cell component-cell">20% Fat</div>
        <div class="table-cell result-cell volume-yellow" id="fat-volume">0</div>
        <div class="table-cell result-cell" id="fat-calories">0</div>
        <div class="table-cell result-cell">-</div>
@@ -303,32 +356,110 @@
     <section class="section">
      <h2>Micronutrients</h2>
      <div class="calculation-section" style="background:#f0fdf4; border:2px solid #bbf7d0;">
-      <div class="calc-row">
-       <div class="calc-label">Peditrace® (max 15 ml/day)</div>
-       <div class="calc-result" id="peditrace-volume" style="background:#dcfce7; color:#166534; border:1px solid #86efac;">0 ml</div>
-       <div></div>
-      </div>
-      <div class="calc-row">
-       <div class="calc-label">Cernevit® (max 3 ml/day)</div>
-       <div class="calc-result" id="cernevit-volume" style="background:#dcfce7; color:#166534; border:1px solid #86efac;">0 ml</div>
-       <div></div>
-      </div>
-      <div class="calc-row">
-       <div class="calc-label">Vitamin K</div>
-       <div style="display:flex; flex-direction:column; gap:8px;">
-        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-          <input type="radio" name="vitamin-k-choice" value="daily" checked style="transform:scale(1.2);">
-          <span style="font-weight:500;">Per day: </span>
-          <span class="calc-result" id="vitamin-k-daily" style="margin-left:5px; background:#dcfce7; color:#166534; border:1px solid #86efac;">0 ml</span>
-        </label>
-        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-          <input type="radio" name="vitamin-k-choice" value="weekly" style="transform:scale(1.2);">
-          <span style="font-weight:500;">Per week: </span>
-          <span class="calc-result" id="vitamin-k-weekly" style="margin-left:5px; background:#dcfce7; color:#166534; border:1px solid #86efac;">0 ml</span>
-        </label>
+      
+      <!-- Peditrace -->
+      <div class="calc-row" style="display:flex; flex-direction:column; align-items:stretch; border-bottom:1px solid #f1f5f9; padding-bottom:15px;">
+       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div class="calc-label">Peditrace® (max 15 ml/day)</div>
+        <div class="calc-result" id="peditrace-volume" style="background:#dcfce7; color:#166534; border:1px solid #86efac;">0 ml</div>
        </div>
-       <div></div>
+       <div class="frequency-selection">
+        <h4>ความถี่ในการให้:</h4>
+        <label class="frequency-option">
+         <input type="radio" name="peditrace-freq" value="daily" checked>
+         <span class="frequency-option-label">Per day</span>
+        </label>
+        <label class="frequency-option">
+         <input type="radio" name="peditrace-freq" value="mwf">
+         <span class="frequency-option-label">Mon Wed Fri</span>
+        </label>
+        <label class="frequency-option">
+         <input type="radio" name="peditrace-freq" value="weekly">
+         <span class="frequency-option-label">Per week</span>
+        </label>
+        <div class="day-selector" id="peditrace-day-selector">
+         <select id="peditrace-day">
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+          <option value="0">Sunday</option>
+         </select>
+        </div>
+       </div>
       </div>
+
+      <!-- Cernevit -->
+      <div class="calc-row" style="display:flex; flex-direction:column; align-items:stretch; border-bottom:1px solid #f1f5f9; padding-bottom:15px;">
+       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div class="calc-label">Cernevit® (max 3 ml/day)</div>
+        <div class="calc-result" id="cernevit-volume" style="background:#dcfce7; color:#166534; border:1px solid #86efac;">0 ml</div>
+       </div>
+       <div class="frequency-selection">
+        <h4>ความถี่ในการให้:</h4>
+        <label class="frequency-option">
+         <input type="radio" name="cernevit-freq" value="daily" checked>
+         <span class="frequency-option-label">Per day</span>
+        </label>
+        <label class="frequency-option">
+         <input type="radio" name="cernevit-freq" value="mwf">
+         <span class="frequency-option-label">Mon Wed Fri</span>
+        </label>
+        <label class="frequency-option">
+         <input type="radio" name="cernevit-freq" value="weekly">
+         <span class="frequency-option-label">Per week</span>
+        </label>
+        <div class="day-selector" id="cernevit-day-selector">
+         <select id="cernevit-day">
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+          <option value="0">Sunday</option>
+         </select>
+        </div>
+       </div>
+      </div>
+
+      <!-- Vitamin K -->
+      <div class="calc-row" style="display:flex; flex-direction:column; align-items:stretch;">
+       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div class="calc-label">Vitamin K (max 0.5 ml/day)</div>
+       </div>
+       <div class="frequency-selection">
+        <h4>เลือกวิธีการให้:</h4>
+        <label class="frequency-option">
+         <input type="radio" name="vitamin-k-choice" value="none" checked>
+         <span class="frequency-option-label">ไม่เติม</span>
+        </label>
+        <label class="frequency-option">
+         <input type="radio" name="vitamin-k-choice" value="daily">
+         <span class="frequency-option-label">Per day</span>
+         <span class="source-option-value" id="vitamin-k-daily" style="margin-left:10px;">0 ml</span>
+        </label>
+        <label class="frequency-option">
+         <input type="radio" name="vitamin-k-choice" value="weekly">
+         <span class="frequency-option-label">Per week</span>
+         <span class="source-option-value" id="vitamin-k-weekly" style="margin-left:10px;">0 ml</span>
+        </label>
+        <div class="day-selector" id="vitamin-k-day-selector">
+         <select id="vitamin-k-day">
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+          <option value="0">Sunday</option>
+         </select>
+        </div>
+       </div>
+      </div>
+
      </div>
     </section>
 
@@ -434,6 +565,61 @@
   <script>
     const defaultConfig = { app_title:"TPN Calculator", subtitle:"สำหรับเด็ก" };
 
+    // Set default date to today
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date();
+      const dateStr = today.toISOString().split('T')[0];
+      document.getElementById('order-date').value = dateStr;
+    });
+
+    // Show/hide day selector based on frequency choice
+    document.querySelectorAll('input[name="peditrace-freq"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const selector = document.getElementById('peditrace-day-selector');
+        selector.style.display = this.value === 'weekly' ? 'block' : 'none';
+        calculateTPN();
+      });
+    });
+
+    document.querySelectorAll('input[name="cernevit-freq"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const selector = document.getElementById('cernevit-day-selector');
+        selector.style.display = this.value === 'weekly' ? 'block' : 'none';
+        calculateTPN();
+      });
+    });
+
+    document.querySelectorAll('input[name="vitamin-k-choice"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const selector = document.getElementById('vitamin-k-day-selector');
+        selector.style.display = this.value === 'weekly' ? 'block' : 'none';
+        calculateTPN();
+      });
+    });
+
+    // Add listeners for day selectors
+    document.getElementById('peditrace-day')?.addEventListener('change', calculateTPN);
+    document.getElementById('cernevit-day')?.addEventListener('change', calculateTPN);
+    document.getElementById('vitamin-k-day')?.addEventListener('change', calculateTPN);
+
+    // Helper function to check if micronutrient should be included today
+    function shouldIncludeMicronutrient(freq, selectedDay, orderDate) {
+      const date = new Date(orderDate);
+      const dayOfWeek = date.getDay(); // 0=Sunday, 1=Monday, etc.
+      
+      if (freq === 'daily') return true;
+      if (freq === 'mwf') return [1, 3, 5].includes(dayOfWeek); // Mon, Wed, Fri
+      if (freq === 'weekly') return dayOfWeek === parseInt(selectedDay);
+      return false;
+    }
+
+    // Helper function to get day name
+    function getDayName(dateStr) {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const date = new Date(dateStr);
+      return days[date.getDay()];
+    }
+
     // 1dp special rounding
     function r1(v){ if(!isFinite(v)||v===0) return 0; const h=Math.floor(v*100); const d2=h%10; return d2===9? Math.ceil(v*10)/10 : Math.floor(v*10)/10; }
     // int special rounding
@@ -453,6 +639,9 @@
       const k = parseFloat(document.getElementById('k').value) || 0;
       const ca = parseFloat(document.getElementById('ca').value) || 0;
       const mg = parseFloat(document.getElementById('mg').value) || 0;
+
+      // Get order date
+      const orderDate = document.getElementById('order-date').value;
 
       // Macronutrients
       const proteinVol_raw = (bw*protein*100)/10;
@@ -476,11 +665,11 @@
       const naReq_raw = na*bw;
       const rNa_raw = Math.max(0, naReq_raw - naFromGly);
 
-      // Na source volumes (always calculate for display)
+      // Na source volumes
       const naclVol_1 = rNa_raw>0 ? r1(rNa_raw/0.5) : 0;
       const naAcVol_1 = rNa_raw>0 ? r1(rNa_raw/3.0) : 0;
 
-      // K source volumes (always calculate for display)
+      // K source volumes
       const totalK_raw = k*bw;
       const kclVol_1 = totalK_raw>0 ? r1(totalK_raw/2.0) : 0;
       const kAcVol_1 = totalK_raw>0 ? r1(totalK_raw/3.0) : 0;
@@ -489,17 +678,42 @@
       const caVol_1 = r1((ca*bw)/0.25);
       const mgVol_1 = r1((mg*bw)/2.0);
 
-      // Micro
-      let pedit_raw = 1*bw; let peditExceeded=false; if(pedit_raw>15){ pedit_raw=15; peditExceeded=true; }
-      const pedit_1 = r1(pedit_raw);
-      let cern_raw = 1*bw; let cernExceeded=false; if(cern_raw>3){ cern_raw=3; cernExceeded=true; }
-      const cern_1 = r1(cern_raw);
+      // Micro - check if should be included based on frequency and order date
+      const peditFreq = document.querySelector('input[name="peditrace-freq"]:checked')?.value || 'daily';
+      const peditDay = document.getElementById('peditrace-day')?.value || '1';
+      const includePeditrace = shouldIncludeMicronutrient(peditFreq, peditDay, orderDate);
 
-      // Vitamin K
-      const vitK_day_raw = (10*bw/1000)*0.5;
+      const cernFreq = document.querySelector('input[name="cernevit-freq"]:checked')?.value || 'daily';
+      const cernDay = document.getElementById('cernevit-day')?.value || '1';
+      const includeCernevit = shouldIncludeMicronutrient(cernFreq, cernDay, orderDate);
+
+      let pedit_raw = 1*bw; let peditExceeded=false; if(pedit_raw>15){ pedit_raw=15; peditExceeded=true; }
+      const pedit_1 = includePeditrace ? r1(pedit_raw) : 0;
+
+      let cern_raw = 1*bw; let cernExceeded=false; if(cern_raw>3){ cern_raw=3; cernExceeded=true; }
+      const cern_1 = includeCernevit ? r1(cern_raw) : 0;
+
+      // Vitamin K with max 0.5 ml/day
+      const vitK_day_raw_calc = (10*bw/1000)*0.5;
+      let vitK_day_raw = vitK_day_raw_calc;
+      let vitKExceeded = false;
+      if(vitK_day_raw > 0.5) {
+        vitK_day_raw = 0.5;
+        vitKExceeded = true;
+      }
       const vitK_week_raw = vitK_day_raw*7;
 
-      // Heparin (0 unless PICC checked)
+      // Check if Vitamin K should be included based on frequency and order date
+      const vkChoice = document.querySelector('input[name="vitamin-k-choice"]:checked')?.value || 'none';
+      const vkDay = document.getElementById('vitamin-k-day')?.value || '1';
+      let includeVitaminK = false;
+      if(vkChoice === 'daily') {
+        includeVitaminK = true;
+      } else if(vkChoice === 'weekly') {
+        includeVitaminK = shouldIncludeMicronutrient('weekly', vkDay, orderDate);
+      }
+
+      // Heparin
       const picc = document.getElementById('picc-line-checkbox')?.checked || false;
       const hep_calc_1 = r1(bag>0 ? bag/50 : 0);
       const hep_disp_1 = picc ? hep_calc_1 : 0;
@@ -526,8 +740,11 @@
       if(kSource === 'kcl') totalUsed += kclVol_1;
       if(kSource === 'k-acetate') totalUsed += kAcVol_1;
 
-      const vkChoice = document.querySelector('input[name="vitamin-k-choice"]:checked')?.value || 'daily';
-      if(vkChoice==='daily') totalUsed += vitK_day_raw; else totalUsed += vitK_week_raw;
+      // Add Vitamin K volume only if it should be included today
+      if(includeVitaminK) {
+        if(vkChoice==='daily') totalUsed += vitK_day_raw; 
+        else if(vkChoice==='weekly') totalUsed += vitK_week_raw;
+      }
 
       const swVol = Math.floor(bag - totalUsed);
 
@@ -574,31 +791,62 @@
       document.getElementById('ca-volume').textContent = caVol_1.toFixed(1) + ' ml';
       document.getElementById('mg-volume').textContent = mgVol_1.toFixed(1) + ' ml';
 
+      // Update Peditrace display
       const pedEl = document.getElementById('peditrace-volume');
-      pedEl.textContent = pedit_1.toFixed(1) + ' ml';
-      pedEl.style.background = peditExceeded ? '#dc2626' : '#dcfce7';
-      pedEl.style.color = peditExceeded ? 'white' : '#166534';
-      pedEl.style.border = peditExceeded ? '1px solid #dc2626' : '1px solid #86efac';
+      if (!includePeditrace) {
+        pedEl.textContent = '0 ml (ไม่ให้วันนี้)';
+        pedEl.style.background = '#fef3c7';
+        pedEl.style.color = '#92400e';
+        pedEl.style.border = '1px solid #fcd34d';
+      } else {
+        pedEl.textContent = pedit_1.toFixed(1) + ' ml';
+        pedEl.style.background = peditExceeded ? '#dc2626' : '#dcfce7';
+        pedEl.style.color = peditExceeded ? 'white' : '#166534';
+        pedEl.style.border = peditExceeded ? '1px solid #dc2626' : '1px solid #86efac';
+      }
 
+      // Update Cernevit display
       const cerEl = document.getElementById('cernevit-volume');
-      cerEl.textContent = cern_1.toFixed(1) + ' ml';
-      cerEl.style.background = cernExceeded ? '#dc2626' : '#dcfce7';
-      cerEl.style.color = cernExceeded ? 'white' : '#166534';
-      cerEl.style.border = cernExceeded ? '1px solid #dc2626' : '1px solid #86efac';
+      if (!includeCernevit) {
+        cerEl.textContent = '0 ml (ไม่ให้วันนี้)';
+        cerEl.style.background = '#fef3c7';
+        cerEl.style.color = '#92400e';
+        cerEl.style.border = '1px solid #fcd34d';
+      } else {
+        cerEl.textContent = cern_1.toFixed(1) + ' ml';
+        cerEl.style.background = cernExceeded ? '#dc2626' : '#dcfce7';
+        cerEl.style.color = cernExceeded ? 'white' : '#166534';
+        cerEl.style.border = cernExceeded ? '1px solid #dc2626' : '1px solid #86efac';
+      }
 
-      // Vitamin K display
+      // Vitamin K display with max limit check
       const dailyRadio = document.querySelector('input[name="vitamin-k-choice"][value="daily"]');
       const weeklyRadio = document.querySelector('input[name="vitamin-k-choice"][value="weekly"]');
       const dailyLabel = dailyRadio?.parentElement;
+      const weeklyLabel = weeklyRadio?.parentElement;
+
+      const dailyEl = document.getElementById('vitamin-k-daily');
+      const weeklyEl = document.getElementById('vitamin-k-weekly');
+
       if(vitK_day_raw < 0.01){
-        document.getElementById('vitamin-k-daily').textContent = vitK_day_raw.toFixed(3) + ' ml (เตรียมไม่ได้)';
+        dailyEl.textContent = vitK_day_raw.toFixed(3) + ' ml (เตรียมไม่ได้)';
+        dailyEl.style.background = '#fef3c7';
+        dailyEl.style.color = '#92400e';
+        dailyEl.style.border = '1px solid #fcd34d';
         if(dailyRadio){ dailyRadio.disabled=true; if(dailyLabel){ dailyLabel.style.opacity='0.5'; dailyLabel.style.cursor='not-allowed'; } }
         if(dailyRadio && weeklyRadio && dailyRadio.checked) weeklyRadio.checked = true;
-      }else{
-        document.getElementById('vitamin-k-daily').textContent = vitK_day_raw.toFixed(3) + ' ml';
+      } else {
+        dailyEl.textContent = vitK_day_raw.toFixed(3) + ' ml';
+        dailyEl.style.background = vitKExceeded ? '#dc2626' : '#dbeafe';
+        dailyEl.style.color = vitKExceeded ? 'white' : '#1e40af';
+        dailyEl.style.border = vitKExceeded ? '1px solid #dc2626' : '1px solid #bfdbfe';
         if(dailyRadio){ dailyRadio.disabled=false; if(dailyLabel){ dailyLabel.style.opacity='1'; dailyLabel.style.cursor='pointer'; } }
       }
-      document.getElementById('vitamin-k-weekly').textContent = vitK_week_raw.toFixed(3) + ' ml';
+
+      weeklyEl.textContent = vitK_week_raw.toFixed(3) + ' ml';
+      weeklyEl.style.background = '#dbeafe';
+      weeklyEl.style.color = '#1e40af';
+      weeklyEl.style.border = '1px solid #bfdbfe';
 
       // Heparin display
       document.getElementById('heparin-volume').textContent = hep_disp_1.toFixed(1) + ' ml';
@@ -608,7 +856,7 @@
       const swSec = document.getElementById('sterile-water-section');
       swSec.style.background = swVol<0 ? 'linear-gradient(135deg,#ef4444 0%,#dc2626 100%)' : 'linear-gradient(135deg,#06b6d4 0%,#0891b2 100%)';
 
-      // Total mOsmol display + color change at 900
+      // Total mOsmol display
       document.getElementById('total-osmol').textContent = '~' + r0(totalOsm_raw);
       const osmolSec = document.getElementById('osmol-section');
       osmolSec.style.background = r0(totalOsm_raw) > 900 ? 'linear-gradient(135deg,#ef4444 0%,#dc2626 100%)' : 'linear-gradient(135deg,#10b981 0%,#059669 100%)';
@@ -622,17 +870,16 @@
     }
 
     // listeners
-    ['bw','rate','bag','protein','dextrose','fat','p','na','k','ca','mg'].forEach(id=>{
+    ['bw','rate','bag','protein','dextrose','fat','p','na','k','ca','mg','order-date'].forEach(id=>{
       const el=document.getElementById(id); if(el) el.addEventListener('input', calculateTPN);
     });
     const milkEl=document.getElementById('milk');
     if(milkEl){ milkEl.addEventListener('input', function(){ const milk=parseFloat(this.value)||0; const t=document.getElementById('total-milk'); if(t) t.value=(milk*8).toFixed(0); calculateTPN(); }); }
     const totMilkEl=document.getElementById('total-milk'); if(totMilkEl){ totMilkEl.addEventListener('input', calculateTPN); }
     
-    // Radio button listeners for Na and K sources
+    // Radio button listeners
     document.querySelectorAll('input[name="na-source"]').forEach(r=>r.addEventListener('change', calculateTPN));
     document.querySelectorAll('input[name="k-source"]').forEach(r=>r.addEventListener('change', calculateTPN));
-    
     document.getElementById('picc-line-checkbox')?.addEventListener('change', calculateTPN);
     document.querySelectorAll('input[name="vitamin-k-choice"]').forEach(r=>r.addEventListener('change', calculateTPN));
 
@@ -642,21 +889,25 @@
       const name = document.getElementById('patient-name')?.value.trim();
       const ward = document.getElementById('patient-ward')?.value.trim();
       const bw = document.getElementById('bw')?.value;
+      const orderDate = document.getElementById('order-date')?.value;
 
-      if (!hn || !name || !ward || !bw) {
-        alert('⚠️ กรุณากรอกข้อมูลผู้ป่วยและน้ำหนักให้ครบถ้วน');
+      if (!hn || !name || !ward || !bw || !orderDate) {
+        alert('⚠️ กรุณากรอกข้อมูลให้ครบถ้วน');
         return;
       }
 
+      // Get day name
+      const dayName = getDayName(orderDate);
+
       // Collect all data
       const reportData = {
-        // Patient info
+        orderDate: orderDate,
+        orderDayName: dayName,
+        route: document.querySelector('input[name="tpn-route"]:checked')?.value || 'central',
         hn: hn,
         name: name,
         ward: ward,
         bw: bw,
-        
-        // Input values
         rate: document.getElementById('rate')?.value || '0',
         bag: document.getElementById('bag')?.value || '0',
         protein: document.getElementById('protein')?.value || '0',
@@ -664,15 +915,11 @@
         fat: document.getElementById('fat')?.value || '0',
         milk: document.getElementById('milk')?.value || '0',
         totalMilk: document.getElementById('total-milk')?.value || '0',
-        
-        // Electrolytes input
         p: document.getElementById('p')?.value || '0',
         na: document.getElementById('na')?.value || '0',
         k: document.getElementById('k')?.value || '0',
         ca: document.getElementById('ca')?.value || '0',
         mg: document.getElementById('mg')?.value || '0',
-        
-        // Calculated results
         proteinVol: document.getElementById('protein-volume')?.textContent || '0',
         proteinCal: document.getElementById('protein-calories')?.textContent || '0',
         dextroseVol: document.getElementById('dextrose-volume')?.textContent || '0',
@@ -680,8 +927,6 @@
         fatVol: document.getElementById('fat-volume')?.textContent || '0',
         fatCal: document.getElementById('fat-calories')?.textContent || '0',
         gir: document.getElementById('gir-result')?.textContent || '0',
-        
-        // Electrolytes results
         pVol: document.getElementById('p-volume')?.textContent || '0',
         naFromGly: document.getElementById('na-from-glycophos')?.textContent || '0',
         naSource: document.querySelector('input[name="na-source"]:checked')?.value || '',
@@ -692,19 +937,18 @@
         kAcVol: document.getElementById('k-acetate-volume')?.textContent || '0',
         caVol: document.getElementById('ca-volume')?.textContent || '0',
         mgVol: document.getElementById('mg-volume')?.textContent || '0',
-        
-        // Micronutrients
         peditrace: document.getElementById('peditrace-volume')?.textContent || '0',
+        peditFreq: document.querySelector('input[name="peditrace-freq"]:checked')?.value || 'daily',
+        peditDay: document.getElementById('peditrace-day')?.value || '1',
         cernevit: document.getElementById('cernevit-volume')?.textContent || '0',
-        vitKChoice: document.querySelector('input[name="vitamin-k-choice"]:checked')?.value || 'daily',
+        cernFreq: document.querySelector('input[name="cernevit-freq"]:checked')?.value || 'daily',
+        cernDay: document.getElementById('cernevit-day')?.value || '1',
+        vitKChoice: document.querySelector('input[name="vitamin-k-choice"]:checked')?.value || 'none',
+        vitKDay: document.getElementById('vitamin-k-day')?.value || '1',
         vitKDaily: document.getElementById('vitamin-k-daily')?.textContent || '0',
         vitKWeekly: document.getElementById('vitamin-k-weekly')?.textContent || '0',
-        
-        // Heparin
         hasPicc: document.getElementById('picc-line-checkbox')?.checked || false,
         heparinVol: document.getElementById('heparin-volume')?.textContent || '0',
-        
-        // Totals
         sterileWater: document.getElementById('sterile-water-volume')?.textContent || '0',
         totalOsmol: document.getElementById('total-osmol')?.textContent || '0',
         totalCalDay: document.getElementById('total-calories-day')?.textContent || '0',
@@ -714,7 +958,6 @@
         tfFromMilk: document.getElementById('tf-from-milk')?.textContent || '0'
       };
 
-      // Save to localStorage
       localStorage.setItem('tpnReportData', JSON.stringify(reportData));
       window.location.href = 'report.html';
     });
@@ -735,7 +978,3 @@
   </script>
  </body>
 </html>
-```
-
----
-
